@@ -1,5 +1,6 @@
 package br.dsp.projeto.sglcspringjpa.ui;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +24,7 @@ public class MenuPessoa {
     private Sexo obterSexo(Pessoa cl) {
         Sexo sexo = Sexo.OUTROS; // Valor padrão
 
-        String sexoInput = JOptionPane.showInputDialog("Sexo (M/F)", cl.getSexo().toString());
+        String sexoInput = JOptionPane.showInputDialog("Sexo (M/F)", cl.getSexo());
 
         if (sexoInput != null && !sexoInput.isEmpty()) {
             if (sexoInput.equalsIgnoreCase("F")) {
@@ -40,17 +41,21 @@ public class MenuPessoa {
 	public void obterCliente(Pessoa cl) {
 		String nome = JOptionPane.showInputDialog("Nome", cl.getNome());
 		String cpf = JOptionPane.showInputDialog("CPF", cl.getCpf());
-        String data_nascimentoInput = JOptionPane.showInputDialog("Data de Nascimento (dd/MM/yyyy)", new SimpleDateFormat("dd/MM/yyyy").format(cl.getDataNascimento()));
+		String email = JOptionPane.showInputDialog("E-mail", cl.getEmail());
+        //String data_nascimentoInput = JOptionPane.showInputDialog("Data de Nascimento (dd/MM/yyyy)", new SimpleDateFormat("dd/MM/yyyy").format(cl.getDataNascimento()));
         Sexo sexo = obterSexo(cl);
 
 		cl.setNome(nome);
 		cl.setCpf(cpf);
-        try {
-            Date data_nascimento = new SimpleDateFormat("dd/MM/yyyy").parse(data_nascimentoInput);
-            cl.setDataNascimento(data_nascimento);
-        } catch (Exception e) {
-            log.error("Erro: {}", e.getMessage(), e);
-        }
+		cl.setEmail(email);
+		/* if (data_nascimentoInput != null && !data_nascimentoInput.isEmpty()) {
+			try {
+				Date data_nascimento = new SimpleDateFormat("dd/MM/yyyy").parse(data_nascimentoInput);
+				cl.setDataNascimento(data_nascimento);
+			} catch (ParseException e) {
+				log.error("Erro: {}", e.getMessage(), e);
+			}
+		} */
         cl.setSexo(sexo);
 	}
 
