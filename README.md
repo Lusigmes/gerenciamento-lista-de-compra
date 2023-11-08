@@ -15,13 +15,15 @@ classDiagram
     elementos "1" -- "&nbsp;*" listas_elementos
     pessoas "1" -- "*" compras
 
-class Pessoas {
+
+class Pessoa {
     -id: Integer
     -cpf: String
     -nome: String
     -sexo: Sexo ENUM
     -data_nascimento: Date
 }
+
 
 class Compra {
     -id: Integer
@@ -32,6 +34,7 @@ class Compra {
 
 }
 
+
 class ListaElemento {
     -id: Integer
     -quantidade: int
@@ -40,6 +43,7 @@ class ListaElemento {
     -elemento: Elemento
     +getValorTotal() float
 }
+
 
 class Elemento {
     -id: Integer
