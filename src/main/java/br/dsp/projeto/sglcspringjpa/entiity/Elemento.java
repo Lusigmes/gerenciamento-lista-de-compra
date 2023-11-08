@@ -1,6 +1,5 @@
 package br.dsp.projeto.sglcspringjpa.entiity;
 
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 
 import br.dsp.projeto.sglcspringjpa.entiity.enums.Categoria;
 import jakarta.persistence.Column;

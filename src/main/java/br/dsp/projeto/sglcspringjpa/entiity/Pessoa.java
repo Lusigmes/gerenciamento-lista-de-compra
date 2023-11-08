@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "pessoas")
-public abstract class Pessoa {
+public class Pessoa {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +37,7 @@ public abstract class Pessoa {
     private String nome;
 
     @NotNull(message = "A data de nascimento é obrigatória")
-    @Column(nullable = false)
+    @Column(name = "data_nascimento", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dataNascimento;
 
