@@ -5,6 +5,7 @@ package br.dsp.projeto.sglcspringjpa;
 import javax.swing.JOptionPane;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -15,9 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SpringBootApplication/* (scanBasePackages = "br.dsp.projeto.sglcspringjpa") */
-/* @EntityScan("br.dsp.projeto.sglcspringjpa.entiity")
+/* @EntityScan("br.dsp.projeto.sglcspringjpa.entity")
 @EnableJpaRepositories("br.dsp.projeto.sglcspringjpa.dao") */
-public class SglcSpringJpaApplication {
+public class SglcSpringJpaApplication implements CommandLineRunner {
 
     @Autowired
     private MenuPessoa menuPessoa;
