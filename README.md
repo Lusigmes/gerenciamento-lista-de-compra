@@ -1,8 +1,13 @@
 # sglc-spring-jpa
-Etapa 2 - Desenvolvimento de software para Persistência
-Equipe: Luis Gomes 
-        Saulo Bruno
-Professor: Regis Pires
+Etapa 2 - Desenvolvimento de software para Persistência  
+
+
+Equipe: Luis Gomes  
+        Saulo Bruno  
+
+        
+Professor: Regis Pires  
+
 
 ```mermaid
 classDiagram
