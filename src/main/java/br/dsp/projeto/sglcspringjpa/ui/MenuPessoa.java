@@ -18,37 +18,40 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class MenuPessoa {
-    	@Autowired
+    
+	@Autowired
 	private PessoaDAO baseClientes;
 
-    private Sexo obterSexo(Pessoa cl) {
-        Sexo sexo = Sexo.OUTROS; // Valor padrão
+    private Sexo obterSexo(Pessoa cliente) {
+        Sexo sexo = Sexo.OUTROS; 
 
-        String sexoInput = JOptionPane.showInputDialog("Sexo (M/F)", cl.getSexo());
+        String sexoInput = JOptionPane.showInputDialog("Sexo (M/F)", cliente.getSexo());
 
         if (sexoInput != null && !sexoInput.isEmpty()) {
             if (sexoInput.equalsIgnoreCase("F")) {
                 sexo = Sexo.F;
             }else if (sexoInput.equalsIgnoreCase("M")) {
                 sexo = Sexo.M;
-            }/* else
-                sexo = Sexo.OUTROS; */
+            }
         }
 
         return sexo;
     }
 
-	public void obterCliente(Pessoa cl) {
-		String nome = JOptionPane.showInputDialog("Nome", cl.getNome());
-		String cpf = JOptionPane.showInputDialog("CPF", cl.getCpf());
-		String email = JOptionPane.showInputDialog("E-mail", cl.getEmail());
-        //String data_nascimentoInput = JOptionPane.showInputDialog("Data de Nascimento (dd/MM/yyyy)", new SimpleDateFormat("dd/MM/yyyy").format(cl.getDataNascimento()));
-        Sexo sexo = obterSexo(cl);
-
-		cl.setNome(nome);
-		cl.setCpf(cpf);
-		cl.setEmail(email);
-		/* if (data_nascimentoInput != null && !data_nascimentoInput.isEmpty()) {
+	public void obterCliente(Pessoa cliente) {
+		String nome = JOptionPane.showInputDialog("Nome", cliente.getNome());
+		String cpf = JOptionPane.showInputDialog("CPF", cliente.getCpf());
+		String email = JOptionPane.showInputDialog("E-mail", cliente.getEmail());
+        Sexo sexo = obterSexo(cliente);
+		
+		cliente.setNome(nome);
+		cliente.setCpf(cpf);
+		cliente.setEmail(email);
+		cliente.setSexo(sexo);
+		
+      /*   tratamento de data defasado
+	  String data_nascimentoInput = JOptionPane.showInputDialog("Data de Nascimento (dd/MM/yyyy)", new SimpleDateFormat("dd/MM/yyyy").format(cl.getDataNascimento()));
+		if (data_nascimentoInput != null && !data_nascimentoInput.isEmpty()) {
 			try {
 				Date data_nascimento = new SimpleDateFormat("dd/MM/yyyy").parse(data_nascimentoInput);
 				cl.setDataNascimento(data_nascimento);
@@ -56,13 +59,12 @@ public class MenuPessoa {
 				log.error("Erro: {}", e.getMessage(), e);
 			}
 		} */
-        cl.setSexo(sexo);
 	}
 
 	public void listaClientes(List<Pessoa> clientes) {
 		StringBuilder listagem = new StringBuilder();
-		for(Pessoa cl : clientes) {
-			listagem.append(cl.toString()).append("\n");
+		for(Pessoa cliente : clientes) {
+			listagem.append(cliente.toString()).append("\n");
 		}
 		JOptionPane.showMessageDialog(null, listagem.length() == 0 ? "Nenhum cliente encontrado" : listagem);
 	}
@@ -84,56 +86,52 @@ public class MenuPessoa {
 		char opcao = '0';
 		do {
 			try {
-				Pessoa cll;
-			//	String cpf;
+				Pessoa cliente;
+				String cpf;
 				opcao = JOptionPane.showInputDialog(menu).charAt(0);
 				switch (opcao) {
 					case '1':     // Inserir
-						cll = new Pessoa();
-						obterCliente(cll);
-						baseClientes.save(cll);
+						cliente = new Pessoa();
+						obterCliente(cliente);
+						baseClientes.save(cliente);
 						break;
-					/* case '2':     // Atualizar por CPF
+					case '2':     // Atualizar por CPF
 						cpf = JOptionPane.showInputDialog("Digite o CPF do cliente a ser alterado");
-						cl = baseClientes.findFirstByCpf(cpf);
-						if (cl != null) {
-							obterCliente(cl);
-							baseClientes.save(cl);
+						cliente = baseClientes.findPessoaByCpf(cpf);
+						if (cliente != null) {
+							obterCliente(cliente);
+							baseClientes.save(cliente);
 						} else {
 							JOptionPane.showMessageDialog(null, "Não foi possível atualizar, pois o cliente não foi encontrado.");
 						}
 						break;
 					case '3':     // Remover por CPF
 						cpf = JOptionPane.showInputDialog("CPF");
-						cl = baseClientes.findFirstByCpf(cpf);
-						if (cl != null) {
-							baseClientes.deleteById(cl.getId());
+						cliente = baseClientes.findPessoaByCpf(cpf);
+						if (cliente != null) {
+							baseClientes.deleteById(cliente.getId());
 						} else {
 							JOptionPane.showMessageDialog(null, "Não foi possível remover, pois o cliente não foi encontrado.");
 						}
 						break;
 					case '4':     // Exibir por CPF
 						cpf = JOptionPane.showInputDialog("CPF");
-						// Temos 3 opções de implementação que fazem o mesmo:
-						//cl = baseClientes.findFirstByCpf(cpf);
-						//cl = baseClientes.buscaPrimeiroPorCpf(cpf);
-						cl = baseClientes.buscaPorCpfViaConsultaNomeada(cpf);
-						listaCliente(cl);
+						
+						cliente = baseClientes.findPessoaPorCpfNomeado(cpf);
+						listaCliente(cliente);
 						break;
 					case '5':     // Exibir por id
 						int id = Integer.parseInt(JOptionPane.showInputDialog("Id"));
-						cl = baseClientes.findById(id).orElse(null);
-						listaCliente(cl);
+						cliente = baseClientes.findById(id).orElse(null);
+						listaCliente(cliente);
 						break;
 					case '6':     // Exibir todos
 						listaClientes(baseClientes.findAll());
 						break;
-					case '7':     // Exibir todos que contem determinado nome
+					case '7':     // Exibir todos que contem um caractere
 						String nome = JOptionPane.showInputDialog("Nome");
-						// Temos 2 opções de implementação que fazem o mesmo:
-						// listaClientes(baseClientes.findByNomeStartingWith(nome));
-						listaClientes(baseClientes.buscaPorNomeContendoString(nome));
-						break; */
+						listaClientes(baseClientes.findPessoaPorNomeEspecifico(nome));
+						break;// */
 					case '8':     // Sair
 						break;
 					default:
