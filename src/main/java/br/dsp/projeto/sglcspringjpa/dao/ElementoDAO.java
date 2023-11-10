@@ -12,3 +12,9 @@ public interface ElementoDAO extends JpaRepository<Elemento, Integer> {
     @Query("select e from Elemento e where e.nome iLike %:nome%")
     public List<Elemento> findElementosByNome(String nome);
 }
+
+/*Obter o produto por id.
+Obter o produto por código.
+Obter os produtos por descrição. Parte da string de consulta (substring) é usada para obtenção dos produtos.
+Dado um preço, obter os produtos com valores menores ou iguais a esse preço.
+Dadas uma data inicial e uma data final, obter os produtos cuja data da última entrada está entre essas datas. */

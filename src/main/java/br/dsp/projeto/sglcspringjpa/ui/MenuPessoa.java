@@ -43,22 +43,20 @@ public class MenuPessoa {
 		String cpf = JOptionPane.showInputDialog("CPF", cliente.getCpf());
 		String email = JOptionPane.showInputDialog("E-mail", cliente.getEmail());
         Sexo sexo = obterSexo(cliente);
-		
-		cliente.setNome(nome);
-		cliente.setCpf(cpf);
-		cliente.setEmail(email);
-		cliente.setSexo(sexo);
-		
-      /*   tratamento de data defasado
-	  String data_nascimentoInput = JOptionPane.showInputDialog("Data de Nascimento (dd/MM/yyyy)", new SimpleDateFormat("dd/MM/yyyy").format(cl.getDataNascimento()));
-		if (data_nascimentoInput != null && !data_nascimentoInput.isEmpty()) {
-			try {
-				Date data_nascimento = new SimpleDateFormat("dd/MM/yyyy").parse(data_nascimentoInput);
-				cl.setDataNascimento(data_nascimento);
-			} catch (ParseException e) {
-				log.error("Erro: {}", e.getMessage(), e);
-			}
-		} */
+		String dataInput = JOptionPane.showInputDialog("Data de Nascimento(dd/MM/yyyy)", cliente.getDataNascimento());
+		try {
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			Date dataNascimento = format.parse(dataInput);
+	
+			cliente.setNome(nome);
+			cliente.setCpf(cpf);
+			cliente.setEmail(email);
+			cliente.setSexo(sexo);
+			cliente.setDataNascimento(dataNascimento);
+		} catch (ParseException e) {
+			log.error("Errro: {}", e.getMessage(), e);
+			JOptionPane.showMessageDialog(null, "Formato de data inválido. Use dd/MM/yyyy");
+		}
 	}
 
 	public void listaClientes(List<Pessoa> clientes) {
@@ -125,8 +123,8 @@ public class MenuPessoa {
 						cliente = baseClientes.findById(id).orElse(null);
 						listaCliente(cliente);
 						break;
-					case '6':     // Exibir todos
-						listaClientes(baseClientes.findAll());
+					case '6':     // Exibir todos ordenadao por id
+						listaClientes(baseClientes.findAllOrdenado());
 						break;
 					case '7':     // Exibir todos que contem um caractere
 						String nome = JOptionPane.showInputDialog("Nome");
@@ -134,6 +132,10 @@ public class MenuPessoa {
 						break;// */
 					case '8':     // Sair
 						break;
+					
+					case '9':     // Sair
+						break;
+					
 					default:
 						JOptionPane.showMessageDialog(null, "Opção Inválida");
 						break;
@@ -143,6 +145,6 @@ public class MenuPessoa {
 				JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
 			}
 
-		} while(opcao != '8');
+		} while(opcao != '9');
 	}
 }

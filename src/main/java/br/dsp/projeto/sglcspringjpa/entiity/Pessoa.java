@@ -42,10 +42,10 @@ public class Pessoa {
     @Column(nullable = false)
     private String nome;
 
-   /*  @NotNull(message = "A data de nascimento é obrigatória")
+    @NotNull(message = "A data de nascimento é obrigatória")
     @Column(name = "data_nascimento", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date dataNascimento; */
+    private Date dataNascimento;
 
     @NotBlank(message = "Digite um e-maail válido")
     @Column(nullable = false)
