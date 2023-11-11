@@ -80,10 +80,12 @@ public class MenuPessoa {
 			.append("5 - Exibir por id\n")
 			.append("6 - Exibir todos\n")
 			.append("7 - Exibir todos que contém determinado nome\n")
-			.append("8 - \n")
-			.append("9 - n")
-			.append("10 - \n")
-			.append("11 - Menu anterior");
+			.append("8 - Exibir todos de determinado sexo\n")
+			.append("9 - Exibir todos que nasceram entre uma data inicial e uma data final\n")
+			.append("10 - Exibir todos que possuem email de determinado dominio (Gmail, Outlook, Hotmail, ...)\n")
+			.append("11 - \n")
+			.append("12 - \n")
+			.append("13 - Menu anterior");
 		int opcao = 0;
 		do {
 			try {
@@ -115,9 +117,8 @@ public class MenuPessoa {
 							JOptionPane.showMessageDialog(null, "Não foi possível remover, pois o cliente não foi encontrado.");
 						}
 						break;
-					case 4:     // Exibir por CPF
+					case 4:     // Exibir por CPF (NAMED QUERY)
 						cpf = JOptionPane.showInputDialog("CPF");
-						
 						cliente = baseClientes.findPessoaPorCpfNomeado(cpf);
 						listaCliente(cliente);
 						break;
@@ -129,20 +130,45 @@ public class MenuPessoa {
 					case 6:     // Exibir todos ordenadao por id
 						listaClientes(baseClientes.findAllOrdenado());
 						break;
-					case 7:     // Exibir todos que contem um caractere
+					case 7:     // Exibir todos que contem um caractere em seu nome
 						String nome = JOptionPane.showInputDialog("Nome");
-						listaClientes(baseClientes.findPessoaPorNomeEspecifico(nome));
-						break;// */
-					case 8:     // Sair
+						listaClientes(baseClientes.findPessoaPorCaractereNome(nome));
+						 //  todos que contem determinado caractere no nome, consulta baseadas no nome do método
+						//listaClientes(baseClientes.findByNomeContainingIgnoreCase(nome)); 
+						break;
+					case 8:     //Exibir todos de determinado sexo
+						String sexo = JOptionPane.showInputDialog("Sexo: M / F / Outros");
+						listaClientes(baseClientes.findBySexo(sexo));
 						break;
 					
-					case 9:     // Sair
+					case 9:     // Exibir todos que nasceram entre uma data inicial e uma data final
+						SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+						try {
+							Date dataInicial = dateFormat.parse(JOptionPane.showInputDialog("Data inicial (dd/MM/yyyy)"));
+							Date dataFinal = dateFormat.parse(JOptionPane.showInputDialog("Data limite (dd/MM/yyyy)"));
+
+							List<Pessoa> nascidosEntreDatas = baseClientes.findByBirthBetweenDatas(dataInicial, dataFinal);
+
+							if (nascidosEntreDatas.isEmpty()) {
+								JOptionPane.showMessageDialog(null, "Nenhum cliente encontrado entre as datas informadas.");
+							} else {
+								listaClientes(nascidosEntreDatas);
+							}
+							} catch (ParseException e) {
+								JOptionPane.showMessageDialog(null, "Formato de data inválido. Use o formato dd/MM/yyyy.");
+							}
+
 						break;
-					
-					case 10:     // Sair
+					case 10:     // Exibir todos que possuem email de determinado dominio (Gmail, Outlook, Hotmail, ...)
+						String dominio = JOptionPane.showInputDialog("Dominio do E-mail (Gmail, Outlook, Yahoo, ...)");
+						listaClientes(baseClientes.findByEmailIgnoreCase(dominio));
 						break;
-					
+							
 					case 11:     // Sair
+						break;
+					case 12:     // Sair
+						break;
+					case 13:     // Sair
 						break;
 					
 					default:
@@ -154,6 +180,6 @@ public class MenuPessoa {
 				JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
 			}
 
-		} while(opcao != 11);
+		} while(opcao != 13);
 	}
 }

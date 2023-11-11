@@ -23,14 +23,14 @@ public interface ElementoDAO extends JpaRepository<Elemento, Integer> {
     public List<Elemento> findElementosByDescricao(String descricao);
     
     @Query("select e from Elemento e where e.valor <= :valor")
-    public List<Elemento> findElementosByPreco(float valor);
+    public List<Elemento> findElementosByValor(float valor);
     
     @Query("select e from Elemento e order by e.id asc")
     public List<Elemento> findAllOrdenado();
 
-   /*  @Query("select e from Elemento e where e.")
-    public List<Elemento> findElementosByCategoriaValor(String categoria, float valor);
- */
+   /*  @Query("select e from Elemento e where e.") //exibir todos elementos de determinada categoria que possui um valor menor ou igual do valor selecionado
+    public List<Elemento> findElementosByCategoriaValor(String categoria, float valor);*/
+ 
     @Query(name = "findElementoByCategoria")
     public List<Elemento> findElementosByCategoriaNamed(String categoria);
 }

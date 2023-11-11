@@ -100,10 +100,11 @@ public class MenuElemento {
 			.append("5 - Exibir por id\n")
 			.append("6 - Exibir todos\n")
 			.append("7 - Exibir todos que contém determinado nome\n")
-			.append("8 - Exibir todos que contem determinado nome em sua descrição\n")
-			.append("9 - Exibir todos de determinada categoria [ Roupas, Eletronicos, Livros, Alimentos, Jogos, Brinquedos, Beleza, Moveis, Esportes\n")
-			.append("10 - \n")
-			.append("11 - Menu anterior");
+			.append("8 - Exibir todos que contém determinado nome em sua descrição\n")
+			.append("9 - Exibir todos de uma determinada Categoria : Roupas, Eletronicos, Livros, Alimentos, Jogos, Brinquedos, Beleza, Moveis, Esportes\n")
+			.append("10 - Exibir todos que possuem um valor abaixo do valor consultado\n")
+			.append("11 - Exibir todos que contem determinado valor no seu código \n")
+			.append("12 - Menu anterior");
 		int opcao = 0;
 		do {
 			try {
@@ -158,13 +159,19 @@ public class MenuElemento {
 						String descricao = JOptionPane.showInputDialog("Descrição");
 						listaItems(baseItems.findElementosByDescricao(descricao));
 						break;
-						case 9:     // Exibir todos de determinada categoria (named query )
+					case 9:     // Exibir todos de determinada categoria (named query )
 						String categoria = JOptionPane.showInputDialog("Categoria:  Roupas, Eletronicos, Livros, Alimentos, Jogos, Brinquedos, Beleza, Moveis, Esportes");
 						listaItems(baseItems.findElementosByCategoriaNamed(categoria.toUpperCase()));
 						break;
-					case 10:     // Sair
+					case 10:     // Exibir todos que possuem um valor abaixo do valor consultado
+						float valor = Float.parseFloat(JOptionPane.showInputDialog("Valor"));
+						listaItems(baseItems.findElementosByValor(valor));
 						break;
-					case 11:     // Sair
+					case 11:     // Exibir todos que contem determinado valor no seu códiigo
+						codigo = JOptionPane.showInputDialog("Pedaço de valor de Código");
+						listaItems(baseItems.findElementosByCodigo(codigo));
+						break;
+					case 12:     // Sair
 						break;
 					default:
 						JOptionPane.showMessageDialog(null, "Opção Inválida");
@@ -175,6 +182,6 @@ public class MenuElemento {
 				JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
 			}
 
-		} while(opcao != 11);
+		} while(opcao != 12);
 	}
 }
