@@ -46,21 +46,24 @@ public class MenuElemento {
 			.append("5 - Exibir por id\n")
 			.append("6 - Exibir todos\n")
 			.append("7 - Exibir todos que contém determinado nome\n")
-			.append("8 - Menu anterior");
-		char opcao = '0';
+			.append("8 -Exibir todos que contem determinado nome em sua descrição\n")
+			.append("9 - n")
+			.append("10 - \n")
+			.append("11 - Menu anterior");
+		int opcao = 0;
 		do {
 			try {
 				Elemento item;
 				String codigo;
                 ;
-				opcao = JOptionPane.showInputDialog(menu).charAt(0);
+				opcao = Integer.parseInt(JOptionPane.showInputDialog(menu));
 				switch (opcao) {
-					case '1':     // Inserir
+					case 1:     // Inserir
 						item = new Elemento();
 						obterItem(item);
 						baseItems.save(item);
 						break;
-					case '2':     // Atualizar por CPF
+					case 2:     // Atualizar por CPF
 						codigo = JOptionPane.showInputDialog("Digite o CPF do Item a ser alterado");
 						//item = baseItems.findPessoaByCpf(codigo);
 						// if (item != null) {
@@ -70,7 +73,7 @@ public class MenuElemento {
 						// 	JOptionPane.showMessageDialog(null, "Não foi possível atualizar, pois o Item não foi encontrado.");
 						// }
 						break;
-					case '3':     // Remover por CPF
+					case 3:     // Remover por CPF
 						codigo = JOptionPane.showInputDialog("CPF");
 						//item = baseItems.findPessoaByCpf(codigo);
 						// if (item != null) {
@@ -79,18 +82,18 @@ public class MenuElemento {
 						// 	JOptionPane.showMessageDialog(null, "Não foi possível remover, pois o Item não foi encontrado.");
 						// }
 						break;
-					case '4':     // Exibir por CPF
+					case 4:     // Exibir por CPF
 						codigo = JOptionPane.showInputDialog("CPF");
 						
 						//item = baseItems.findPessoaPorCpfNomeado(codigo);
 						//listaItem(item);
 						break;
-					case '5':     // Exibir por id
+					case 5:     // Exibir por id
 						int id = Integer.parseInt(JOptionPane.showInputDialog("Id"));
 						item = baseItems.findById(id).orElse(null);
 						listaItem(item);
 						break;
-					case '6':     // Exibir todos
+					case 6:     // Exibir todos
 						listaItems(baseItems.findAll());
 						break;
 					case '7':     // Exibir todos que contem um caractere

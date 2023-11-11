@@ -7,42 +7,18 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.dsp.projeto.sglcspringjpa.dao.PessoaDAO;
 import br.dsp.projeto.sglcspringjpa.entiity.Pessoa;
-import br.dsp.projeto.sglcspringjpa.entiity.enums.Sexo;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class MenuPessoa {
-    
-	@Autowired
-	private PessoaDAO baseClientes;
-
-    private Sexo obterSexo(Pessoa cliente) {
-        Sexo sexo = Sexo.OUTROS; 
-
-        String sexoInput = JOptionPane.showInputDialog("Sexo (M/F)", cliente.getSexo());
-
-        if (sexoInput != null && !sexoInput.isEmpty()) {
-            if (sexoInput.equalsIgnoreCase("F")) {
-                sexo = Sexo.F;
-            }else if (sexoInput.equalsIgnoreCase("M")) {
-                sexo = Sexo.M;
-            }
-        }
-
-        return sexo;
-    }
-
-	public void obterCliente(Pessoa cliente) {
+public class MenuListaElemento {
+    	public void obterCliente(Pessoa cliente) {
 		String nome = JOptionPane.showInputDialog("Nome", cliente.getNome());
 		String cpf = JOptionPane.showInputDialog("CPF", cliente.getCpf());
 		String email = JOptionPane.showInputDialog("E-mail", cliente.getEmail());
-        Sexo sexo = obterSexo(cliente);
 		String dataInput = JOptionPane.showInputDialog("Data de Nascimento(dd/MM/yyyy)", cliente.getDataNascimento());
 		try {
 			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -51,7 +27,6 @@ public class MenuPessoa {
 			cliente.setNome(nome);
 			cliente.setCpf(cpf);
 			cliente.setEmail(email);
-			cliente.setSexo(sexo);
 			cliente.setDataNascimento(dataNascimento);
 		} catch (ParseException e) {
 			log.error("Errro: {}", e.getMessage(), e);
@@ -91,7 +66,7 @@ public class MenuPessoa {
 				String cpf;
 				opcao = Integer.parseInt(JOptionPane.showInputDialog(menu));
 				switch (opcao) {
-					case 1:     // Inserir
+				/* 	case 1:     // Inserir
 						cliente = new Pessoa();
 						obterCliente(cliente);
 						baseClientes.save(cliente);
@@ -132,7 +107,7 @@ public class MenuPessoa {
 					case 7:     // Exibir todos que contem um caractere
 						String nome = JOptionPane.showInputDialog("Nome");
 						listaClientes(baseClientes.findPessoaPorNomeEspecifico(nome));
-						break;// */
+						break;// 
 					case 8:     // Sair
 						break;
 					
@@ -147,7 +122,7 @@ public class MenuPessoa {
 					
 					default:
 						JOptionPane.showMessageDialog(null, "Opção Inválida");
-						break;
+						break; */
 				}
 			} catch (Exception e) {
 				log.error(e.getMessage(), e);
