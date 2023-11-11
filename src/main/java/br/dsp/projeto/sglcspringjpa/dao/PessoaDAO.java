@@ -18,6 +18,8 @@ public interface PessoaDAO extends JpaRepository<Pessoa, Integer>{
 
     @Query("select p from Pessoa p where p.nome ilike %:nome%")
     public List<Pessoa> findPessoaPorNomeEspecifico(String nome);
+
+    public List<Pessoa> findByNomeContainingIgnoreCase(String str);
 }
 
 /*Obter o produto por id.

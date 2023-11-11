@@ -21,14 +21,15 @@ import lombok.NoArgsConstructor;
 
 
 @NamedQueries({
-		@NamedQuery(name = "findElementoByCategoria", query = "select e from Elemento e where e.categoria = upper(categoria)")
+		@NamedQuery(name = "findElementoByCategoria", query = "select e from Elemento e where e.categoria = upper(:categoria)")
 })
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "elementos")//itens
-public class Elemento { //item para elemento ? por causa do tipo Item,  Item item ;
+public class Elemento { 
+//item para elemento ? por causa do tipo Item,  Item item ;
    
 
     @Id

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import br.dsp.projeto.sglcspringjpa.dao.ElementoDAO;
 import br.dsp.projeto.sglcspringjpa.entiity.Elemento;
 import br.dsp.projeto.sglcspringjpa.entiity.Pessoa;
+import br.dsp.projeto.sglcspringjpa.entiity.enums.Categoria;
 import br.dsp.projeto.sglcspringjpa.entiity.enums.Sexo;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,35 +20,88 @@ public class MenuElemento {
     @Autowired
     private ElementoDAO baseItems;
     
-
-    public void obterItem(Elemento Item) {
-		String nome = JOptionPane.showInputDialog("Nome", Item.getNome());
 	
+    private Categoria obterCategoria(Elemento elemento) {
+        Categoria categoria = Categoria.OUTROS; 
+
+        String categoriaInput = JOptionPane.showInputDialog("CATEGORIAS .: \n" +
+				"	 Roupas\r\n" + //
+        		"    Eletronicos\r\n" + //
+        		"    Livros\r\n" + //
+        		"    Alimentos\r\n" + //
+        		"    Jogos\r\n" + //
+        		"    Brinquedos\r\n" + //
+        		"    Beleza\r\n" + //
+        		"    Moveis\r\n" + //
+        		"    Esportes\r\n",
+		elemento.getCategoria());
+
+        if (categoriaInput != null && !categoriaInput.isEmpty()) {
+            if (categoriaInput.equalsIgnoreCase("alimentos")) {
+                categoria = Categoria.ALIMENTOS;
+            }else if (categoriaInput.equalsIgnoreCase("beleza")) {
+                categoria = Categoria.BELEZA;
+            }else if (categoriaInput.equalsIgnoreCase("eletronicos")) {
+                categoria = Categoria.ELETRONICOS;
+            }else if (categoriaInput.equalsIgnoreCase("livros")) {
+                categoria = Categoria.LIVROS;
+            }else if (categoriaInput.equalsIgnoreCase("jogos")) {
+                categoria = Categoria.JOGOS;
+            }else if (categoriaInput.equalsIgnoreCase("brinquedos")) {
+                categoria = Categoria.BRINQUEDOS;
+            }else if (categoriaInput.equalsIgnoreCase("moveis")) {
+                categoria = Categoria.MOVEIS;
+            }else if (categoriaInput.equalsIgnoreCase("esportes")) {
+                categoria = Categoria.ESPORTES;
+            }else if (categoriaInput.equalsIgnoreCase("roupas")) {
+                categoria = Categoria.ROUPAS;
+            }
+        }
+
+        return categoria;
+    }
+        
+
+    
+
+    public void obterItem(Elemento elemento) {
+		String nome = JOptionPane.showInputDialog("Nome", elemento.getNome());
+		String codigo = JOptionPane.showInputDialog("Código", elemento.getCodigo());
+		String descricao = JOptionPane.showInputDialog("Nome", elemento.getDescricao());
+		float valor = Float.parseFloat(JOptionPane.showInputDialog("Valor", elemento.getValor()));
+		Categoria categoria = obterCategoria(elemento);
+
+		elemento.setNome(nome);
+		elemento.setCodigo(codigo);
+		elemento.setDescricao(descricao);
+		elemento.setValor(valor);
+		elemento.setCategoria(categoria);
+
 	}
 
-	public void listaItems(List<Elemento> items) {
+	public void listaItems(List<Elemento> elemento) {
 		StringBuilder listagem = new StringBuilder();
-		for(Elemento item : items) {
+		for(Elemento item : elemento) {
 			listagem.append(item.toString()).append("\n");
 		}
 		JOptionPane.showMessageDialog(null, listagem.length() == 0 ? "Nenhum Item encontrado" : listagem);
 	}
 
-	public void listaItem(Elemento item) {
-		JOptionPane.showMessageDialog(null, item == null ? "Nenhum Item encontrado" : item.toString());
+	public void listaItem(Elemento elemento) {
+		JOptionPane.showMessageDialog(null, elemento == null ? "Nenhum Item encontrado" : elemento.toString());
 	}
 
 	public void menu() {
 		StringBuilder menu = new StringBuilder("Menu Items\n")
 			.append("1 - Inserir\n")
-			.append("2 - Atualizar por CPF\n")
-			.append("3 - Remover por CPF\n")
-			.append("4 - Exibir por CPF\n")
+			.append("2 - Atualizar por Codigo\n")
+			.append("3 - Remover por Codigo\n")
+			.append("4 - Exibir por Codigo\n")
 			.append("5 - Exibir por id\n")
 			.append("6 - Exibir todos\n")
 			.append("7 - Exibir todos que contém determinado nome\n")
-			.append("8 -Exibir todos que contem determinado nome em sua descrição\n")
-			.append("9 - n")
+			.append("8 - Exibir todos que contem determinado nome em sua descrição\n")
+			.append("9 - Exibir todos de determinada categoria [ Roupas, Eletronicos, Livros, Alimentos, Jogos, Brinquedos, Beleza, Moveis, Esportes\n")
 			.append("10 - \n")
 			.append("11 - Menu anterior");
 		int opcao = 0;
@@ -63,30 +117,30 @@ public class MenuElemento {
 						obterItem(item);
 						baseItems.save(item);
 						break;
-					case 2:     // Atualizar por CPF
-						codigo = JOptionPane.showInputDialog("Digite o CPF do Item a ser alterado");
-						//item = baseItems.findPessoaByCpf(codigo);
-						// if (item != null) {
-						// 	obterItem(item);
-						// 	baseItems.save(item);
-						// } else {
-						// 	JOptionPane.showMessageDialog(null, "Não foi possível atualizar, pois o Item não foi encontrado.");
-						// }
+					case 2:     // Atualizar por Codigo
+						codigo = JOptionPane.showInputDialog("Digite o Código do Item a ser alterado");
+						item = baseItems.findElementoByCodigo(codigo);
+						if (item != null) {
+							obterItem(item);
+							baseItems.save(item);
+						} else {
+							JOptionPane.showMessageDialog(null, "Não foi possível atualizar, pois o Item não foi encontrado.");
+						}
 						break;
-					case 3:     // Remover por CPF
-						codigo = JOptionPane.showInputDialog("CPF");
-						//item = baseItems.findPessoaByCpf(codigo);
-						// if (item != null) {
-						// 	baseItems.deleteById(item.getId());
-						// } else {
-						// 	JOptionPane.showMessageDialog(null, "Não foi possível remover, pois o Item não foi encontrado.");
-						// }
+					case 3:     // Remover por Codigo
+						codigo = JOptionPane.showInputDialog("Código");
+						item = baseItems.findElementoByCodigo(codigo);
+						if (item != null) {
+							baseItems.deleteById(item.getId());
+						} else {
+							JOptionPane.showMessageDialog(null, "Não foi possível remover, pois o Item não foi encontrado.");
+						}
 						break;
-					case 4:     // Exibir por CPF
-						codigo = JOptionPane.showInputDialog("CPF");
+					case 4:     // Exibir por Codigo
+						codigo = JOptionPane.showInputDialog("Código");
 						
-						//item = baseItems.findPessoaPorCpfNomeado(codigo);
-						//listaItem(item);
+						item = baseItems.findElementoByCodigo(codigo);
+						listaItem(item);
 						break;
 					case 5:     // Exibir por id
 						int id = Integer.parseInt(JOptionPane.showInputDialog("Id"));
@@ -94,13 +148,23 @@ public class MenuElemento {
 						listaItem(item);
 						break;
 					case 6:     // Exibir todos
-						listaItems(baseItems.findAll());
+						listaItems(baseItems.findAllOrdenado());
 						break;
-					case '7':     // Exibir todos que contem um caractere
+					case 7:     // Exibir todos que contem um caractere
 						String nome = JOptionPane.showInputDialog("Nome");
 						listaItems(baseItems.findElementosByNome(nome));
 						break;// */
-					case '8':     // Sair
+					case 8:     // Exibir todos que contem um caractere especifico na descrição
+						String descricao = JOptionPane.showInputDialog("Descrição");
+						listaItems(baseItems.findElementosByDescricao(descricao));
+						break;
+						case 9:     // Exibir todos de determinada categoria (named query )
+						String categoria = JOptionPane.showInputDialog("Categoria:  Roupas, Eletronicos, Livros, Alimentos, Jogos, Brinquedos, Beleza, Moveis, Esportes");
+						listaItems(baseItems.findElementosByCategoriaNamed(categoria.toUpperCase()));
+						break;
+					case 10:     // Sair
+						break;
+					case 11:     // Sair
 						break;
 					default:
 						JOptionPane.showMessageDialog(null, "Opção Inválida");
@@ -111,6 +175,6 @@ public class MenuElemento {
 				JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
 			}
 
-		} while(opcao != '8');
+		} while(opcao != 11);
 	}
 }

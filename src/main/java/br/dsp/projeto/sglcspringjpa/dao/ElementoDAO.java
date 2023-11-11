@@ -9,22 +9,30 @@ import java.util.List;
 
 public interface ElementoDAO extends JpaRepository<Elemento, Integer> {
     
+    
+    @Query("select e from Elemento e where e.codigo = :codigo")
+    public Elemento findElementoByCodigo(String codigo);
+    
     @Query("select e from Elemento e where e.nome iLike %:nome%")
     public List<Elemento> findElementosByNome(String nome);
+
+    @Query("select e from Elemento e where e.codigo iLike %:codigo%")
+    public List<Elemento> findElementosByCodigo(String codigo);
     
     @Query("select e from Elemento e where e.descricao iLike %:descricao%")
     public List<Elemento> findElementosByDescricao(String descricao);
     
     @Query("select e from Elemento e where e.valor <= :valor")
     public List<Elemento> findElementosByPreco(float valor);
+    
+    @Query("select e from Elemento e order by e.id asc")
+    public List<Elemento> findAllOrdenado();
 
+   /*  @Query("select e from Elemento e where e.")
+    public List<Elemento> findElementosByCategoriaValor(String categoria, float valor);
+ */
     @Query(name = "findElementoByCategoria")
     public List<Elemento> findElementosByCategoriaNamed(String categoria);
-
-
-
-
-
 }
 
 /*Obter o produto por id.
