@@ -38,4 +38,12 @@ public class Compra {
     @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, orphanRemoval = true)/* fetch = FetchType.LAZY */
     private List<ListaElemento> listaElementos;
 
+    public float getValorTotal() {
+		float total = 0;
+		for (ListaElemento item: this.listaElementos) {
+			total += item.getValorTotal();
+		}
+		return total;
+	}
+
 }
