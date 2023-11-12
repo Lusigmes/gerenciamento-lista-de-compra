@@ -23,9 +23,12 @@ public interface ElementoDAO extends JpaRepository<Elemento, Integer> {
     public List<Elemento> findElementosByDescricao(String descricao);
     
     @Query("select e from Elemento e where e.valor <= :valor")
-    public List<Elemento> findElementosByValor(float valor);
+    public List<Elemento> findElementosLessByValor(float valor);
     
+    @Query("select e from Elemento e where e.valor >= :valor")
+    public List<Elemento> findElementosMoreByValor(float valor);
     @Query("select e from Elemento e order by e.id asc")
+
     public List<Elemento> findAllOrdenado();
 
    /*  @Query("select e from Elemento e where e.") //exibir todos elementos de determinada categoria que possui um valor menor ou igual do valor selecionado

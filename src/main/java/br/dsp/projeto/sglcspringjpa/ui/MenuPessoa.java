@@ -77,15 +77,13 @@ public class MenuPessoa {
 			.append("2 - Atualizar por CPF\n")
 			.append("3 - Remover por CPF\n")
 			.append("4 - Exibir por CPF\n")
-			.append("5 - Exibir por id\n")
+			.append("5 - Exibir por Id\n")
 			.append("6 - Exibir todos\n")
 			.append("7 - Exibir todos que contém determinado nome\n")
-			.append("8 - Exibir todos de determinado sexo\n")
-			.append("9 - Exibir todos que nasceram entre uma data inicial e uma data final\n")
-			.append("10 - Exibir todos que possuem email de determinado dominio (Gmail, Outlook, Hotmail, ...)\n")
-			.append("11 - \n")
-			.append("12 - \n")
-			.append("13 - Menu anterior");
+			.append("8 - Exibir todos de determinado sexo(M / F / Outros\n")
+			.append("9 - Exibir todos que fazem aniversário entre dada uma data inicial e uma data final\n")
+			.append("10 - Exibir todos que possuem email de determinado dominio (Gmail / Outlook / Hotmail / ...)\n")
+			.append("11 - Menu anterior");
 		int opcao = 0;
 		do {
 			try {
@@ -166,11 +164,6 @@ public class MenuPessoa {
 							
 					case 11:     // Sair
 						break;
-					case 12:     // Sair
-						break;
-					case 13:     // Sair
-						break;
-					
 					default:
 						JOptionPane.showMessageDialog(null, "Opção Inválida");
 						break;
@@ -180,6 +173,6 @@ public class MenuPessoa {
 				JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
 			}
 
-		} while(opcao != 13);
+		} while(opcao != 11);
 	}
 }

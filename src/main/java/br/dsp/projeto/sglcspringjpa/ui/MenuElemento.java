@@ -24,7 +24,7 @@ public class MenuElemento {
     private Categoria obterCategoria(Elemento elemento) {
         Categoria categoria = Categoria.OUTROS; 
 
-        String categoriaInput = JOptionPane.showInputDialog("CATEGORIAS .: \n" +
+        String categoriaInput = JOptionPane.showInputDialog("CATEGORIAS .: \r\n" +
 				"	 Roupas\r\n" + //
         		"    Eletronicos\r\n" + //
         		"    Livros\r\n" + //
@@ -33,7 +33,8 @@ public class MenuElemento {
         		"    Brinquedos\r\n" + //
         		"    Beleza\r\n" + //
         		"    Moveis\r\n" + //
-        		"    Esportes\r\n",
+        		"    Esportes\r\n" +
+        		"    Outros\r\n",
 		elemento.getCategoria());
 
         if (categoriaInput != null && !categoriaInput.isEmpty()) {
@@ -57,20 +58,15 @@ public class MenuElemento {
                 categoria = Categoria.ROUPAS;
             }
         }
-
         return categoria;
     }
         
-
-    
-
     public void obterItem(Elemento elemento) {
 		String nome = JOptionPane.showInputDialog("Nome", elemento.getNome());
 		String codigo = JOptionPane.showInputDialog("Código", elemento.getCodigo());
-		String descricao = JOptionPane.showInputDialog("Nome", elemento.getDescricao());
+		String descricao = JOptionPane.showInputDialog("Descrição", elemento.getDescricao());
 		float valor = Float.parseFloat(JOptionPane.showInputDialog("Valor", elemento.getValor()));
 		Categoria categoria = obterCategoria(elemento);
-
 		elemento.setNome(nome);
 		elemento.setCodigo(codigo);
 		elemento.setDescricao(descricao);
@@ -101,15 +97,17 @@ public class MenuElemento {
 			.append("6 - Exibir todos\n")
 			.append("7 - Exibir todos que contém determinado nome\n")
 			.append("8 - Exibir todos que contém determinado nome em sua descrição\n")
-			.append("9 - Exibir todos de uma determinada Categoria : Roupas, Eletronicos, Livros, Alimentos, Jogos, Brinquedos, Beleza, Moveis, Esportes\n")
+			.append("9 - Exibir todos de uma determinada Categoria : Roupas / Eletronicos / Livros / Alimentos / Jogos / Brinquedos / Beleza / Moveis / Esportes\n")
 			.append("10 - Exibir todos que possuem um valor abaixo do valor consultado\n")
-			.append("11 - Exibir todos que contem determinado valor no seu código \n")
-			.append("12 - Menu anterior");
+			.append("11 - Exibir todos que possuem um valor acima do valor consultado\n")
+			.append("12 - Exibir todos que contem determinado valor no seu código \n")
+			.append("13 - Menu anterior");
 		int opcao = 0;
 		do {
 			try {
 				Elemento item;
-				String codigo;
+				String codigo, nome, descricao, categoria;
+				float valor;
                 ;
 				opcao = Integer.parseInt(JOptionPane.showInputDialog(menu));
 				switch (opcao) {
@@ -152,26 +150,30 @@ public class MenuElemento {
 						listaItems(baseItems.findAllOrdenado());
 						break;
 					case 7:     // Exibir todos que contem um caractere
-						String nome = JOptionPane.showInputDialog("Nome");
+						 nome = JOptionPane.showInputDialog("Nome");
 						listaItems(baseItems.findElementosByNome(nome));
 						break;// */
 					case 8:     // Exibir todos que contem um caractere especifico na descrição
-						String descricao = JOptionPane.showInputDialog("Descrição");
+						 descricao = JOptionPane.showInputDialog("Descrição");
 						listaItems(baseItems.findElementosByDescricao(descricao));
 						break;
 					case 9:     // Exibir todos de determinada categoria (named query )
-						String categoria = JOptionPane.showInputDialog("Categoria:  Roupas, Eletronicos, Livros, Alimentos, Jogos, Brinquedos, Beleza, Moveis, Esportes");
+						 categoria = JOptionPane.showInputDialog("Categoria:  Roupas / Eletronicos / Livros / Alimentos / Jogos / Brinquedos / Beleza / Moveis / Esportes");
 						listaItems(baseItems.findElementosByCategoriaNamed(categoria.toUpperCase()));
 						break;
 					case 10:     // Exibir todos que possuem um valor abaixo do valor consultado
-						float valor = Float.parseFloat(JOptionPane.showInputDialog("Valor"));
-						listaItems(baseItems.findElementosByValor(valor));
+						 valor = Float.parseFloat(JOptionPane.showInputDialog("Valor"));
+						listaItems(baseItems.findElementosLessByValor(valor));
 						break;
-					case 11:     // Exibir todos que contem determinado valor no seu códiigo
-						codigo = JOptionPane.showInputDialog("Pedaço de valor de Código");
+					case 11:// Exibir todos que possuem um valor acima do valor consultado
+						 valor = Float.parseFloat(JOptionPane.showInputDialog("Valor"));
+						listaItems(baseItems.findElementosMoreByValor(valor));
+						break;
+					case 12:     // Exibir todos que contem determinado valor no seu códiigo identificador
+						codigo = JOptionPane.showInputDialog("Código parcial");
 						listaItems(baseItems.findElementosByCodigo(codigo));
 						break;
-					case 12:     // Sair
+					case 13:     // Sair
 						break;
 					default:
 						JOptionPane.showMessageDialog(null, "Opção Inválida");
@@ -182,6 +184,6 @@ public class MenuElemento {
 				JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
 			}
 
-		} while(opcao != 12);
+		} while(opcao != 13);
 	}
 }
