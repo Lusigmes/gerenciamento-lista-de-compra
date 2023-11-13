@@ -3,8 +3,6 @@ package br.dsp.projeto.sglcspringjpa.entiity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -48,7 +46,7 @@ public class Compra {
     private LocalDateTime dataCompra;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)/* fetch = FetchType.LAZY */
+    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)/* fetch = FetchType.LAZY */
     private List<ListaElemento> elementos;
 
     @Transactional
@@ -65,8 +63,8 @@ public class Compra {
         return "Compra #" + id + "\n" +
                "Cliente: " + cliente.getNome() + "\n" +
                "Data da Compra: " + dataCompra.format(formatter) + "\n" +
-                 elementos + "\n" +
-               "Valor Total: " + getValorTotal() + "\n";
+                elementos + "\n"; //+
+              // "Valor Total: " + getValorTotal() + "\n";
     }
     
 }

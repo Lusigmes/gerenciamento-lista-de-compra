@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,8 +33,8 @@ public class ListaElemento {
     private Elemento elemento;
     
     @JsonManagedReference
-    @ManyToOne
     @NonNull
+    @ManyToOne
     private Compra compra;
     
     //@Size(min = 0, max = 100, message = "Escolha entre 0 a 100 unidades.")
