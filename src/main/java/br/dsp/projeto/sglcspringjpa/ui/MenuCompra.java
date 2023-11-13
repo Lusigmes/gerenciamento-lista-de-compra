@@ -28,6 +28,9 @@ public class MenuCompra {
 	@Autowired 
 	PessoaDAO basePessoas;
 
+	@Autowired
+	MenuListaElemento menuListaElemento;
+
 
     public void obterCompra(Compra compra) {
 		List<Pessoa> clientes = basePessoas.findAll();
@@ -35,12 +38,12 @@ public class MenuCompra {
 		"Clientes", JOptionPane.PLAIN_MESSAGE, null, clientes.toArray(), compra.getCliente());
 		compra.setCliente(cliente);
 		if (compra.getDataCompra() == null)
-		compra.setDataCompra(LocalDateTime.now());
+			compra.setDataCompra(LocalDateTime.now());
 		baseCompras.save(compra);
-	//	menuItensCompras.menu(compra);
+		menuListaElemento.menu(compra);
 	}
 
-	public void lisaCompras(List<Compra> compras) {
+	public void listaCompras(List<Compra> compras) {
 		StringBuilder listagem = new StringBuilder();
 		for(Compra compr : compras) {
 			listagem.append(compr);
@@ -54,94 +57,79 @@ public class MenuCompra {
 			listagem.append("\n");
 		}
 		JOptionPane.showMessageDialog(null, listagem.length() == 0 ? "Nenhuma compra encontrada" : listagem);
-	}
+	} 
 
 	public void listaCompra(Compra compra) {
 		JOptionPane.showMessageDialog(null, compra == null ? "Nenhuma compra encontrado" : compra.toString());
 	}
 
 	public void menu() {
-		StringBuilder menu = new StringBuilder("Menu Clientes\n")
+		StringBuilder menu = new StringBuilder("Menu de Compras\n")
 			.append("1 - Inserir\n")
-			.append("2 - Atualizar por CPF\n")
-			.append("3 - Remover por CPF\n")
-			.append("4 - Exibir por CPF\n")
-			.append("5 - Exibir por id\n")
-			.append("6 - Exibir todos\n")
-			.append("7 - Exibir todos que contém determinado nome\n")
-			.append("8 - \n")
-			.append("9 - n")
-			.append("10 - \n")
-			.append("11 - Menu anterior");
+			.append("2 - Atualizar por id\n")
+			.append("3 - Remover por id\n")
+			.append("4 - Exibir por id\n")
+			.append("5 - Exibir todos\n")
+			.append("6 - Exibir compras com valor total maior ou igual a um determinado valor\n")
+			.append("7 - Menu anterior");
 		int opcao = 0;
 		do {
 			try {
 				Compra compra;
+				int id;
 				opcao = Integer.parseInt(JOptionPane.showInputDialog(menu));
 				switch (opcao) {
-			/* 		case 1:     // Inserir
-						cliente = new Pessoa();
-						obterCliente(cliente);
-						baseCompras.save(cliente);
+					case 1:     // Inserir
+						compra = new Compra();
+						obterCompra(compra);
 						break;
-					case 2:     // Atualizar por CPF
-						cpf = JOptionPane.showInputDialog("Digite o CPF do cliente a ser alterado");
-						cliente = baseCompras.findPessoaByCpf(cpf);
-						if (cliente != null) {
-							obterCliente(cliente);
-							baseCompras.save(cliente);
+					case 2:     // Atualizar por id
+						id = Integer.valueOf(JOptionPane.showInputDialog("Digite o id da compra a ser alterada"));
+						compra = baseCompras.findById(id).orElse(null);
+						if (compra != null) {
+							obterCompra(compra);
 						} else {
-							JOptionPane.showMessageDialog(null, "Não foi possível atualizar, pois o cliente não foi encontrado.");
+							JOptionPane.showMessageDialog(null, "Não foi encontrada compra com o id " + id);
 						}
 						break;
-					case 3:     // Remover por CPF
-						cpf = JOptionPane.showInputDialog("CPF");
-						cliente = baseCompras.findPessoaByCpf(cpf);
-						if (cliente != null) {
-							baseCompras.deleteById(cliente.getId());
+					case 3:     // Remover por id
+						id = Integer.valueOf(JOptionPane.showInputDialog("Digite o id da compra a ser removida"));
+						compra = baseCompras.findById(id).orElse(null);
+						if (compra != null) {
+							baseCompras.deleteById(compra.getId());
 						} else {
-							JOptionPane.showMessageDialog(null, "Não foi possível remover, pois o cliente não foi encontrado.");
+							JOptionPane.showMessageDialog(null, "Não foi encontrada compra com o id " + id);
 						}
 						break;
-					case 4:     // Exibir por CPF
-						cpf = JOptionPane.showInputDialog("CPF");
+					case 4:     // Exibir por id
+						id = Integer.parseInt(JOptionPane.showInputDialog("Digite o id da compra a ser exibida"));
+						compra = baseCompras.findCompras(id);
 						
-						cliente = baseCompras.findPessoaPorCpfNomeado(cpf);
-						listaCliente(cliente);
+						if (compra != null) {
+							listaCompra(compra);
+						} else {
+							JOptionPane.showMessageDialog(null, "Não foi encontrada compra com o id " + id);
+						}
 						break;
-					case 5:     // Exibir por id
-						int id = Integer.parseInt(JOptionPane.showInputDialog("Id"));
-						cliente = baseCompras.findById(id).orElse(null);
-						listaCliente(cliente);
+					case 5:     // Exibir todos
+						listaCompras(baseCompras.findAllSorted());
 						break;
-					case 6:     // Exibir todos ordenadao por id
-						listaClientes(baseCompras.findAllOrdenado());
+					case 6:     // Exibir todos
+						// float valor = Float.valueOf(JOptionPane.showInputDialog("Digite o valor"));
+						// listaCompras(baseCompras.findComprasComValorTotalMaiorOuIgualA(valor));
 						break;
-					case 7:     // Exibir todos que contem um caractere
-						String nome = JOptionPane.showInputDialog("Nome");
-						listaClientes(baseCompras.findPessoaPorNomeEspecifico(nome));
-						break;// 
-					case 8:     // Sair
+					case 7:     // Menu anterior
 						break;
-					
-					case 9:     // Sair
-						break;
-					
-					case 10:     // Sair
-						break;
-					
-					case 11:     // Sair
-						break;
-					
 					default:
 						JOptionPane.showMessageDialog(null, "Opção Inválida");
-						break; */
+						break;
 				}
 			} catch (Exception e) {
 				log.error(e.getMessage(), e);
 				JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
 			}
 
-		} while(opcao != 11);
+		} while(opcao != 7);
+	
 	}
 }

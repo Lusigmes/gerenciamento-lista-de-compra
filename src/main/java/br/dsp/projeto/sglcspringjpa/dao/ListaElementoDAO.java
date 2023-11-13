@@ -1,11 +1,19 @@
 package br.dsp.projeto.sglcspringjpa.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import br.dsp.projeto.sglcspringjpa.entiity.ListaElemento;
 
+@Repository
 public interface ListaElementoDAO extends JpaRepository<ListaElemento, Integer>{
     
+    @Query("select le from ListaElemento le where le.compra.id = :idCompra order by le.id asc")
+    public List<ListaElemento> findByCompraId(int idCompra);
+
 }
 
 /*Obter o produto por id.

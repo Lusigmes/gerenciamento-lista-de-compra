@@ -1,5 +1,8 @@
 package br.dsp.projeto.sglcspringjpa.entiity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,13 +28,16 @@ public class ListaElemento {
 
     //@NotNull?
     @ManyToOne
+    @NonNull
     private Elemento elemento;
     
+    @JsonManagedReference
     @ManyToOne
+    @NonNull
     private Compra compra;
     
-    @Size(min = 0, max = 100, message = "Escolha entre 0 a 100 unidades.")
-    @Column(nullable = false)
+    //@Size(min = 0, max = 100, message = "Escolha entre 0 a 100 unidades.")
+    //@Column(nullable = false)
     private float quantidade;
     
     @Column(nullable = false)
@@ -39,5 +45,14 @@ public class ListaElemento {
 
     public float getValorTotal(){
         return this.quantidade * this.valorElemento;
+    }
+    @Override
+    public String toString() {
+        return "Produto #" + id + "\n" +
+               "Nome: " + elemento.getNome() + "\n" +
+               "Descrição: " + elemento.getDescricao() + "\n" +
+               "Quantidade: " + quantidade + "\n" +
+               "Valor por unidade: " + valorElemento + "\n" ;// +
+            //    "Valor Total: " + getValorTotal() + "\n";
     }
 }

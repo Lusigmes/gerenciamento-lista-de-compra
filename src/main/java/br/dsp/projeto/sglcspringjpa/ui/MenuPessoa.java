@@ -80,7 +80,7 @@ public class MenuPessoa {
 			.append("5 - Exibir por Id\n")
 			.append("6 - Exibir todos\n")
 			.append("7 - Exibir todos que contém determinado nome\n")
-			.append("8 - Exibir todos de determinado sexo(M / F / Outros\n")
+			.append("8 - Exibir todos de determinado sexo(M / F / Outros)\n")
 			.append("9 - Exibir todos que fazem aniversário entre dada uma data inicial e uma data final\n")
 			.append("10 - Exibir todos que possuem email de determinado dominio (Gmail / Outlook / Hotmail / ...)\n")
 			.append("11 - Menu anterior");

@@ -2,11 +2,13 @@ package br.dsp.projeto.sglcspringjpa.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
 import br.dsp.projeto.sglcspringjpa.entiity.Pessoa;
 
+@Repository
 public interface PessoaDAO extends JpaRepository<Pessoa, Integer>{
     
     @Query("select p from Pessoa p where p.cpf = :cpf")

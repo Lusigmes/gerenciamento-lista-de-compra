@@ -12,6 +12,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import br.dsp.projeto.sglcspringjpa.ui.MenuPessoa;
+import br.dsp.projeto.sglcspringjpa.ui.MenuCompra;
 import  br.dsp.projeto.sglcspringjpa.ui.MenuElemento;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,9 @@ public class SglcSpringJpaApplication implements CommandLineRunner {
 	
     @Autowired
     private MenuElemento menuElemento;
+
+	@Autowired
+	private MenuCompra menuCompra;
 
   public static void main(String[] args) {
 		SpringApplicationBuilder builder = new SpringApplicationBuilder(SglcSpringJpaApplication.class);
@@ -52,9 +56,10 @@ public class SglcSpringJpaApplication implements CommandLineRunner {
 						menuElemento.menu();
                         log.info("SUCESSO OK - item");
 						break;
-					/* 	case '3':     // Compras
-						menuCompras.menu();
-						break; */
+						case '3':     // Compras
+						menuCompra.menu();
+                        log.info("SUCESSO OK - compra");
+						break;
 					case '4':     // Sair
 						break;
 					default:
