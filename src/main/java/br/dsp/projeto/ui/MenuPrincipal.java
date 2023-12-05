@@ -15,8 +15,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication(scanBasePackages = "br.dsp.projeto")
 @EntityScan("br.dsp.projeto.entity")
-@EnableJpaRepositories("br.dsp.projeto.DAO.jpa")
-// @EnableMongoRepositories("br.dsp.projeto.DAO.mongo")
+// @EnableJpaRepositories("br.dsp.projeto.DAO.jpa")
+@EnableMongoRepositories("br.dsp.projeto.DAO.mongo")
 @Slf4j
 public class MenuPrincipal implements CommandLineRunner {
 
