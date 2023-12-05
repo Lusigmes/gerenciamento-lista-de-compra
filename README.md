@@ -6,7 +6,7 @@ Equipe: Luis Gomes
         Saulo Bruno       
 Professor: Regis Pires  
 
-Aplicação JPA com Spring Boot e Spring Data JPA.
+Aplicação JPA com Spring Boot, Spring Data JPA e Spring Data Mongo.
 
 A aplicação possui menus e sub-menus para cadastro de usuários, listas de compras, itens de lista e produtos.
 
